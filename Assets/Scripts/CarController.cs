@@ -10,6 +10,8 @@ public class CarController : MonoBehaviour
 
     [SerializeField] private float horizontalInput;
     [SerializeField] private float verticalInput;
+    [SerializeField] private GameObject rueda1, rueda2, rueda3, rueda4;
+
 
     private float aceleracion;
     private bool enMovimiento;
@@ -26,6 +28,10 @@ public class CarController : MonoBehaviour
         Direccion();
         Girar();
 
+        rueda1.transform.Rotate(Vector3.right, speed * verticalInput * Time.deltaTime);
+        rueda2.transform.Rotate(Vector3.right, speed * verticalInput * Time.deltaTime);
+        rueda3.transform.Rotate(Vector3.right, speed * verticalInput * Time.deltaTime);
+        rueda4.transform.Rotate(Vector3.right, speed * verticalInput * Time.deltaTime);
     }
 
     private void Direccion()
@@ -33,6 +39,8 @@ public class CarController : MonoBehaviour
         //this.gameObject.transform.position += new Vector3(0,0,Time.deltaTime*speed);
 
         this.gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime * verticalInput);
+        
+
 
 
     }
