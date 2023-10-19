@@ -10,6 +10,7 @@ public class CarController : MonoBehaviour
 
     [SerializeField] private float horizontalInput;
     [SerializeField] private float verticalInput;
+    [SerializeField] private int idJugador;
     [SerializeField] private GameObject rueda1, rueda2, rueda3, rueda4;
 
 
@@ -23,8 +24,8 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical"+idJugador);
+        horizontalInput = Input.GetAxis("Horizontal"+idJugador);
         Direccion();
         Girar();
 

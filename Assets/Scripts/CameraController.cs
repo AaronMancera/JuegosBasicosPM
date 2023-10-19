@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     private Vector3 cameraPos;
     [SerializeField] private Transform player;
+    [SerializeField] private KeyCode switchKey;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +17,11 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         transform.position = player.position + cameraPos;
+        if (Input.GetKeyDown(switchKey))
+        {
+            
+                GetComponent<Camera>().enabled = !GetComponent<Camera>().enabled;
+         
+        }
     }
 }
