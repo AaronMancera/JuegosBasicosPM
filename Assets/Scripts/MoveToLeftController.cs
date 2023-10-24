@@ -11,14 +11,14 @@ public class MoveToLeftController : MonoBehaviour
     void Start()
     {
         speed = 5f;
-        lineaDestroyZ = -13;
+        lineaDestroyZ = -13; //cordenada Z de destrucción del objeto
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime); //movimiento a del objeto hacia el jugador
         if (gameObject.transform.position.z <= lineaDestroyZ)
         {
             Destroy(gameObject);
