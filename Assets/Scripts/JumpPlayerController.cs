@@ -38,7 +38,6 @@ public class JumpPlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("No salto");
 
             ground = false;
         }
@@ -48,14 +47,13 @@ public class JumpPlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("Salto");
 
             ground = true;
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Muerto");
-            
+            Time.timeScale = 0;
         }
 
     }
