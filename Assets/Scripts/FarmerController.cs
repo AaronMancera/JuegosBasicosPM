@@ -9,13 +9,15 @@ public class FarmerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameObject prefabBala;
 
-    [SerializeField] private float horizontalInput;
-    [SerializeField] private bool action1;
+    private float horizontalInput;
+    private float verticalInput;
+    private bool action1;
 
-    //[SerializeField] private float verticalInput;
-
-
-
+    //TODO: Cosas para el raton
+    [SerializeField] private RectTransform canvas;
+    [SerializeField] private RectTransform puntoDeMira;
+    [SerializeField] private Vector3 mousePosition;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +28,13 @@ public class FarmerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //verticalInput = Input.GetAxis("Vertical");
+        verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
         action1 = Input.GetButton("Fire1");
+
         MovimientoHorizontal();
         Shot();
+        MovimientoVertical();
     }
 
     private void MovimientoHorizontal()
@@ -51,9 +55,36 @@ public class FarmerController : MonoBehaviour
         if (gameObject.transform.position.x >= 18 || gameObject.transform.position.x <= -18)
         {
             int rango = (int)-(gameObject.transform.position.x / 18);
-            Vector3 tp = new Vector3(17 * rango, 1, -10);
+            Vector3 tp = new Vector3(17 * rango, gameObject.transform.position.y, gameObject.transform.position.z);
             gameObject.transform.position = tp;
         }
+    }
+    private void MovimientoVertical()
+    {
+        this.gameObject.transform.Translate(-Vector3.back * moveSpeed * Time.deltaTime * verticalInput);
+
+        //NOTE: Este metodo lo que provoca que detecte cuando salga de los limites y que sepa a que lado tiene que tepear
+        if (gameObject.transform.position.z >= 7 || gameObject.transform.position.z <= -12.5)
+        {
+            if (gameObject.transform.position.z > 0)
+            {
+                Vector3 tp = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y,  -12f);
+                gameObject.transform.position = tp;
+
+            }
+            else
+            {
+                Vector3 tp = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 6f);
+                gameObject.transform.position = tp;
+
+
+            }
+        }
+    }
+    //TODO: Crear un metodo que rote al personaje a la posicion del raton
+    private void MirarRaton()
+    {
+        
     }
     private void Shot()
     {
