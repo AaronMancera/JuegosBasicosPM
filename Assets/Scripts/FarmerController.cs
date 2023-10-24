@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FarmerController : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class FarmerController : MonoBehaviour
         MovimientoHorizontal();
         Shot();
         MovimientoVertical();
+
+        MirarRaton();
     }
 
     private void MovimientoHorizontal()
@@ -84,7 +87,7 @@ public class FarmerController : MonoBehaviour
     //TODO: Crear un metodo que rote al personaje a la posicion del raton
     private void MirarRaton()
     {
-        
+
     }
     private void Shot()
     {
