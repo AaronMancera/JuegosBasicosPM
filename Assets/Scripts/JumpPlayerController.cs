@@ -37,6 +37,7 @@ public class JumpPlayerController : MonoBehaviour
 
     }
 
+    #region Colisiones
     //NOTE: Detectar de que colision esta saliendo
     private void OnCollisionExit(Collision collision)
     {
@@ -60,4 +61,5 @@ public class JumpPlayerController : MonoBehaviour
         }
 
     }
+    #endregion Colisiones
 }

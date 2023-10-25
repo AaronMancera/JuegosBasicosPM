@@ -15,15 +15,17 @@ public class FarmerController : MonoBehaviour
     private bool action1;
 
     //TODO: Cosas para el raton
-    [SerializeField] private RectTransform canvas;
-    [SerializeField] private RectTransform puntoDeMira;
-    [SerializeField] private Vector3 mousePosition;
-    
+    [SerializeField] private GameObject puntoDeMira;
+    [SerializeField] private Camera mainCamera;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         initialAttackSpeed = attackSpeed;
+        mainCamera = Camera.main;
+
     }
 
     // Update is called once per frame
@@ -87,7 +89,13 @@ public class FarmerController : MonoBehaviour
     //TODO: Crear un metodo que rote al personaje a la posicion del raton
     private void MirarRaton()
     {
+        // Obtén la posición del mouse en la pantalla.
+        Vector3 mousePositionScreen = Input.mousePosition;
 
+        // Convierte la posición del mouse de la pantalla al mundo.
+        Vector3 mousePositionWorld = mainCamera.ScreenToWorldPoint(new Vector3(mousePositionScreen.x, mousePositionScreen.y, 10.0f));
+
+        puntoDeMira.transform.position =new Vector3(mousePositionWorld.x,1,mousePositionWorld.z);
     }
     private void Shot()
     {
