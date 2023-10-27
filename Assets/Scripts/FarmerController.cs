@@ -63,8 +63,8 @@ public class FarmerController : MonoBehaviour
             MirarRaton();
         }
     }
-    
 
+    #region Movimientos
     private void MovimientoHorizontal()
     {
         this.gameObject.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime * horizontalInput);
@@ -109,6 +109,9 @@ public class FarmerController : MonoBehaviour
             }
         }
     }
+    #endregion Movimientos
+
+    #region MovimientoRatonYDisparo
     //TODO: Crear un metodo que rote al personaje a la posicion del raton
     private void MirarRaton()
     {
@@ -148,7 +151,9 @@ public class FarmerController : MonoBehaviour
             attackSpeed = initialAttackSpeed;
         }
     }
+    #endregion MovimientoRatonYDisparo
 
+    #region Colisiones
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
@@ -159,4 +164,5 @@ public class FarmerController : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+    #endregion Colisiones
 }
