@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 public class FarmerController : MonoBehaviour
 {
@@ -17,6 +19,10 @@ public class FarmerController : MonoBehaviour
     //TODO: Cosas para el raton
     [SerializeField] private GameObject puntoDeMira;
     [SerializeField] private Camera mainCamera;
+    //NOTE: Plane representa un plano infinito en el mundo
+    Plane plane = new Plane(Vector3.up, -1); //se pone -1 para que no este debajo de nuestro plano en el juego
+
+
 
 
 
@@ -41,6 +47,7 @@ public class FarmerController : MonoBehaviour
 
         MirarRaton();
     }
+    
 
     private void MovimientoHorizontal()
     {
@@ -92,18 +99,38 @@ public class FarmerController : MonoBehaviour
         // Obtén la posición del mouse en la pantalla.
         Vector3 mousePositionScreen = Input.mousePosition;
 
-        // Convierte la posición del mouse de la pantalla al mundo.
-        Vector3 mousePositionWorld = mainCamera.ScreenToWorldPoint(new Vector3(mousePositionScreen.x, mousePositionScreen.y, 10.0f));
+        //// Err: El objeto "Punto de mira" no se encuadra bien con el plano de juego
+        //// Convierte la posición del mouse de la pantalla al mundo.
+        ////Vector3 mousePositionWorld = mainCamera.ScreenToWorldPoint(new Vector3(mousePositionScreen.x, mousePositionScreen.y, 10.0f));
+        ////puntoDeMira.transform.position =new Vector3(mousePositionWorld.x,1,mousePositionWorld.z);
 
-        puntoDeMira.transform.position =new Vector3(mousePositionWorld.x,1,mousePositionWorld.z);
+        //FIX: Hemos creado un plano infinito donde se va a more la bola mediante un ray desde la camara del mundo hasta un plano (el generado infinito) y calcule la distancia automaticamente
+        float distance; //el valor da igual, hace lo mismo en 0 como en 50
+        Ray ray = mainCamera.ScreenPointToRay(mousePositionScreen);
+        if(plane.Raycast(ray, out distance))
+        {
+            //Coge el punto del plano donde esta el mouse
+            mousePositionScreen = ray.GetPoint(distance);
+        }
+        //NOTE: Pone el punto de mira en dicha posicion
+        puntoDeMira.transform.position=mousePositionScreen;
+        //NOTE: Coge dentro del jugador el gameobject del cuerpo y lo rota
+        transform.GetChild(transform.childCount - 1).gameObject.transform.LookAt(puntoDeMira.transform);
+
     }
     private void Shot()
     {
         attackSpeed-= Time.deltaTime;
         if (action1 && attackSpeed<=0)
         {
-            Instantiate(prefabBala, gameObject.transform.position, Quaternion.identity);
+            //Instantiate(prefabBala, gameObject.transform.position, Quaternion.identity);
+            // FIX: Esto provoca que aparezca con una leve leve leve orientacion hacia arriba o hacia abajo de manera esporadica
+            Instantiate(prefabBala, gameObject.transform.position, transform.GetChild(transform.childCount - 1).gameObject.transform.rotation);
+
+
+
             attackSpeed = initialAttackSpeed;
         }
     }
+    
 }
