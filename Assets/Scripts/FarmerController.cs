@@ -7,23 +7,36 @@ using Input = UnityEngine.Input;
 
 public class FarmerController : MonoBehaviour
 {
+    /// <summary>
+    /// Movimiento
+    /// </summary>
     [SerializeField] private float attackSpeed;
     private float initialAttackSpeed;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private GameObject prefabBala;
 
     private float horizontalInput;
     private float verticalInput;
     private bool action1;
 
-    //TODO: Cosas para el raton
+    /// <summary>
+    /// Movimiento del mouse y rotacion del jugador
+    /// </summary>
     [SerializeField] private GameObject puntoDeMira;
     [SerializeField] private Camera mainCamera;
     //NOTE: Plane representa un plano infinito en el mundo
     Plane plane = new Plane(Vector3.up, -1); //se pone -1 para que no este debajo de nuestro plano en el juego
 
+    /// <summary>
+    /// Prefabs de proyectiles (comidas)
+    /// </summary>
+    [SerializeField] private GameObject prefabBala;
+    [SerializeField] private GameObject [] listaDeComidas;
 
-
+    /// <summary>
+    /// Vidas por colision entre jugador y animal
+    /// </summary>
+    //NOTE: Necesitamos el GamePrototype2Controller
+    GamePrototype2Controller gamePrototype2Controller;
 
 
     // Start is called before the first frame update
@@ -31,7 +44,8 @@ public class FarmerController : MonoBehaviour
     {
         initialAttackSpeed = attackSpeed;
         mainCamera = Camera.main;
-
+        //NOTE: Esto busca al empezar dentro de la escena un objeto que sea del tipo GamePrototype2Controller
+        gamePrototype2Controller = FindAnyObjectByType<GamePrototype2Controller>();
     }
 
     // Update is called once per frame
@@ -44,8 +58,10 @@ public class FarmerController : MonoBehaviour
         MovimientoHorizontal();
         Shot();
         MovimientoVertical();
-
-        MirarRaton();
+        if (Time.timeScale == 1)
+        {
+            MirarRaton();
+        }
     }
     
 
@@ -125,12 +141,22 @@ public class FarmerController : MonoBehaviour
         {
             //Instantiate(prefabBala, gameObject.transform.position, Quaternion.identity);
             // FIX: Esto provoca que aparezca con una leve leve leve orientacion hacia arriba o hacia abajo de manera esporadica
-            Instantiate(prefabBala, gameObject.transform.position, transform.GetChild(transform.childCount - 1).gameObject.transform.rotation);
-
-
-
+            GameObject bala = Instantiate(prefabBala, gameObject.transform.position, transform.GetChild(transform.childCount - 1).gameObject.transform.rotation);
+            //Le asignamos una comida aleatoria
+            GameObject comida = Instantiate(listaDeComidas[Random.Range(0, listaDeComidas.Length)], gameObject.transform.position, transform.GetChild(transform.childCount - 1).gameObject.transform.rotation);
+            comida.transform.parent = bala.transform;
             attackSpeed = initialAttackSpeed;
         }
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            //NOTE: Hacemos el metodo que hay en el GamePrototype2Controller
+            gamePrototype2Controller.restarVida(1);
+            //NOTE: Choca con el jugador y le restamos una vida y desaparece el animal
+            Destroy(collision.gameObject);
+        }
+    }
 }
