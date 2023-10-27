@@ -111,7 +111,7 @@ public class FarmerController : MonoBehaviour
     }
     #endregion Movimientos
 
-    #region MovimientoRatonYDisparo
+    #region Movimiento del raton y disparo
     //TODO: Crear un metodo que rote al personaje a la posicion del raton
     private void MirarRaton()
     {

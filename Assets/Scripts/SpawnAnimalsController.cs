@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class SpawnAnimalsController : MonoBehaviour
 {
+    /// <summary>
+    /// Atributos necesrios para poder crear el animal (aspecto y posicion)
+    /// </summary>
     [SerializeField] private GameObject[] animales;
     private Vector3 lineaSpwan1; //El lugar donde vamos a coger de referencia para aparecer el objeto vertical
     private Vector3 lineaSpwan2; //El lugar donde vamos a coger de referencia para aparecer el objeto horizontal
-
+    /// <summary>
+    /// Parametros fundamentales para poder controlar la aparicion de los animales
+    /// </summary>
     [SerializeField] private float segSpawnSpeed;
     private float startSegSpawnSpeed;
 
@@ -26,6 +31,7 @@ public class SpawnAnimalsController : MonoBehaviour
     {
         AparecerAnimal();
     }
+    #region Controlador de aparicion de animales
     private void AparecerAnimal()
     {
         segSpawnSpeed -= Time.deltaTime;
@@ -58,5 +64,6 @@ public class SpawnAnimalsController : MonoBehaviour
 
         }
     }
+    #endregion
 
 }

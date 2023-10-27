@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    /// <summary>
+    /// Atributo necesario para determinar la velocidad de disparo
+    /// </summary>
     private int speed;
     //private Vector3 lineaDespwan; //El lugar donde vamos a coger de referencia para desparecer el objeto
+
+    /// <summary>
+    /// Clase GamePrototype2Controller que la neceitamos para poder hacer referencia a los metodos set para aumentar el score
+    /// </summary>
     //NOTE: Necesitamos el GamePrototype2Controller
-    GamePrototype2Controller gamePrototype2Controller;
+    private GamePrototype2Controller gamePrototype2Controller;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +30,11 @@ public class Bullet : MonoBehaviour
     {
         
         gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        //FIX: Soluciona el ERR:Esto provoca que aparezca con una leve leve leve orientacion hacia arriba o hacia abajo de manera esporadica
+        //FIX: Soluciona el (ERR:Esto provoca que aparezca con una leve leve leve orientacion hacia arriba o hacia abajo de manera esporadica) de ñla linea 142 del FarmerController.cs
         gameObject.transform.position = new Vector3(transform.position.x,1,transform.position.z);
         //Desaparecer();
     }
-
+    #region Metodo propio de las balas (en deshuso por el uso de las colisiones)
     //private void Desaparecer()
     //{
     //    if (gameObject.transform.position.z >= lineaDespwan.z)
@@ -36,8 +43,8 @@ public class Bullet : MonoBehaviour
     //        Destroy(gameObject);
     //    }
     //}
-
-    
+    #endregion
+    #region Colisiones
     //NOTE: Hay que poner el script en el mismo sitio donde se ubique el rigibody, sino no funciona
     void OnCollisionEnter(Collision collision)
     {
@@ -58,5 +65,5 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    #endregion
 }

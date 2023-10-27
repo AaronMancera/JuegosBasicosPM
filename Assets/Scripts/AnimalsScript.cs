@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class AnimalsScript : MonoBehaviour
 {
-    //NOTE: Script que debe estar dentro de todos los animales que haya en el array del controller
+    /// <summary>
+    /// Atributo fundamental para determinar la vel de movimiento
+    /// </summary>
+    //NOTE: Script que debe estar dentro de todos los prefabs de animales que haya en el array del controller
     //private Vector3 lineaDespwan; //El lugar donde vamos a coger de referencia para desparecer el objeto
     private int speed;
+    /// <summary>
+    /// Clase GamePrototype2Controller que la neceitamos para poder hacer referencia a los metodos set para restar vida cuando pase la zona de juego
+    /// </summary>
     //NOTE: Necesitamos el GamePrototype2Controller
-    GamePrototype2Controller gamePrototype2Controller;
+    private GamePrototype2Controller gamePrototype2Controller;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +31,8 @@ public class AnimalsScript : MonoBehaviour
         //Desaparecer();
 
     }
+    #region Metodo propio de los animales (en deshuso por el uso de las colisiones)
+
     //private void Desaparecer()
     //{
     //    if(gameObject.transform.position.z <= lineaDespwan.z)
@@ -33,6 +41,9 @@ public class AnimalsScript : MonoBehaviour
     //        Destroy(gameObject);
     //    }
     //}
+    #endregion
+
+    #region Colision
     //NOTE: Sustituye lo de eliminar la bala en todas las direcciones
     private void OnTriggerExit(Collider other)
     {
@@ -43,4 +54,5 @@ public class AnimalsScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    #endregion
 }

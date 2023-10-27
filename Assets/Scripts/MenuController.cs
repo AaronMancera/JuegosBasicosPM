@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class MenuController : MonoBehaviour
 {
+    /// <summary>
+    /// Objetos en la escena para modificar debido a las cirscustancias del juego
+    /// </summary>
     [SerializeField] private GameObject panelMenu,panelInGame;
     [SerializeField] private TMP_Text vidasMenu,vidasInGame,scoreMenu,scoreInGame;
     // Start is called before the first frame update
@@ -23,6 +26,8 @@ public class MenuController : MonoBehaviour
             usuarioPausaReanudaElJuego();
         }
     }
+    #region Metodos propios para el control del menu, debido a alteraciones en el gameplay
+
     private void usuarioPausaReanudaElJuego()
     {
         if (!panelMenu.activeInHierarchy)
@@ -39,7 +44,7 @@ public class MenuController : MonoBehaviour
             Time.timeScale = 1;
         }
     }
-    //TODO: Para cuando muera el personaje, llamara a este metodo
+    //TODO: Para cuando muera el personaje en el GamePrototype2Controller, llamara a este metodo
     public void usuarioMuere()
     {
         Debug.Log("Fin del juego");
@@ -59,16 +64,17 @@ public class MenuController : MonoBehaviour
         }
         Time.timeScale = 0;
     }
-    //TODO: Para cuando dañen al personaje, llamara a este metodo
+    //TODO: Para cuando dañen al personaje en el GamePrototype2Controller, llamara a este metodo
     public void setVidaMenu(int vida)
     {
         vidasMenu.text = ""+vida;
         vidasInGame.text = "" + vida;
     }
-    //TODO: Para cuando sume un score el personaje, llamara a este metodo
+    //TODO: Para cuando sume un score el personaje en el GamePrototype2Controller, llamara a este metodo
     public void setScoreMenu(int score)
     {
         scoreMenu.text = "" + score;
         scoreInGame.text = "" + score;
     }
+    #endregion
 }
