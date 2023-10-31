@@ -22,4 +22,13 @@ public class EnemyBallController : MonoBehaviour
         direccionObjetivo = objetivo.transform.position - transform.position;
         rb.AddForce(direccionObjetivo.normalized * speed);
     }
+    #region Trigger
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("PlayZone"))
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
 }
