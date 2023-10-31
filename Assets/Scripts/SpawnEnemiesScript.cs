@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawnEnemiesScript : MonoBehaviour
 {
+    /// <summary>
+    /// Controla la creacion de los enemigos durante el trascurso de la partida
+    /// </summary>
     private GameObject enemyPrefab;
     private float spawnRange = 9;
     
@@ -17,13 +20,18 @@ public class SpawnEnemiesScript : MonoBehaviour
     {
         
     }
-    //NOTE: Contructor para pasarle por parametro el prefab
+    /// <summary>
+    /// Se le pasa por parametro desde el controlador de juego el prefab para poder instanciarlo
+    /// </summary>
+    /// <param name="enemyPrefab"></param>
     public void SetEnemyPrefab(GameObject enemyPrefab)
     {
         this.enemyPrefab = enemyPrefab;
-    }   
-    
-    //NOTE: Metodo que devuelve una posicion aleatoria para la aparicion de un emeigo
+    }
+    /// <summary>
+    /// Devuelve una posicion aleatoria para instanciar el objeto
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GenerateSpawnPosition()
     {
         float PosX = Random.Range(-spawnRange, spawnRange);
@@ -31,6 +39,10 @@ public class SpawnEnemiesScript : MonoBehaviour
         Vector3 randomPos = new Vector3(PosX,0, PosZ);
         return randomPos;
     }
+    /// <summary>
+    /// Dependiendo del numero de enemigos, el bucle generara 1 o mas enemigos (determinado por las rondas)
+    /// </summary>
+    /// <param name="numEnemigos"></param>
     public void CrearEnemigo(int numEnemigos)
     {
         for (int i = 0; i < numEnemigos; i++)

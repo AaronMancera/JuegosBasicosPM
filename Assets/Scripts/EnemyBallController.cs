@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyBallController : MonoBehaviour
 {
+    /// <summary>
+    /// Este controlador sirve para darle la capacidad al enemigo a ir tras el jugador
+    /// </summary>
     private float speed;
     private Rigidbody rb;
     private GameObject objetivo;
@@ -27,6 +30,7 @@ public class EnemyBallController : MonoBehaviour
         }
     }
     #region Trigger
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("PlayZone"))

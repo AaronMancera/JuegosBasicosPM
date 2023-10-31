@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerBallController : MonoBehaviour
 {
+    /// <summary>
+    /// Este controlador sirve para mover al jugador hacia delante y hacia atras en el sentido recto de la camara y además tiene control de los efectos que alteran al
+    /// jugador
+    /// </summary>
     private Rigidbody rb;
     private float speed;
     private float forwardInput;
@@ -33,9 +37,10 @@ public class PlayerBallController : MonoBehaviour
         forwardInput = Input.GetAxis("Vertical");
         //rb.AddForce(Vector3.forward * speed * forwardInput);
         rb.AddForce(focalPoint.transform.forward * speed * forwardInput);
-
+        //NOTE: Para el el powerUp este bien ubicado y tenga rotacion propia, y no las misma que el jugador
         indicadorPowerUp.transform.position=new Vector3(transform.position.x,transform.position.y+1,transform.position.z);
         indicadorPowerUp.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //NOTE: simplemente con tener el boolean, este lo activara o lo desactivara
         indicadorPowerUp.SetActive(hasPowerUp);
 
 
@@ -70,7 +75,10 @@ public class PlayerBallController : MonoBehaviour
     }
     #endregion
     #region Rutinas
-    //NOTE: Esto funcionaara para crear un subproceso secundrario que deshabilitara el poder en 7 segundos
+    /// <summary>
+    /// Esto funcionara para crear un subproceso secundrario, en este caso esperara 7 segundos y cuando acabe el contador, le quitara el poder
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PowerUpCountdownRoutine()
     {
         yield return new WaitForSeconds(7);

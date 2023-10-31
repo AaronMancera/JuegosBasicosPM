@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class GamePrototype4Controller : MonoBehaviour
 {
+    /// <summary>
+    /// El controlador de rondas y del juego que usara los script adicionales para realizar ciertas acciones fundamentales para las rondas
+    /// </summary>
     private SpawnEnemiesScript spawnEnemiesScript;
     [SerializeField] private int ronda;
     private GameObject [] listaDeEnemigos;
