@@ -14,6 +14,7 @@ public class PlayerBallController : MonoBehaviour
     //NOTE: Control de potenciador
     [SerializeField] private bool hasPowerUp;
     private float powerupStrength;
+    private GameObject indicadorPowerUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,8 @@ public class PlayerBallController : MonoBehaviour
         focalPoint = GameObject.Find("FocalPoint");
         hasPowerUp = false;
         powerupStrength = 50f;
+        indicadorPowerUp = gameObject.transform.GetChild(0).gameObject;
+        indicadorPowerUp.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,6 +33,12 @@ public class PlayerBallController : MonoBehaviour
         forwardInput = Input.GetAxis("Vertical");
         //rb.AddForce(Vector3.forward * speed * forwardInput);
         rb.AddForce(focalPoint.transform.forward * speed * forwardInput);
+
+        indicadorPowerUp.transform.position=new Vector3(transform.position.x,transform.position.y+1,transform.position.z);
+        indicadorPowerUp.transform.rotation = Quaternion.Euler(0, 0, 0);
+        indicadorPowerUp.SetActive(hasPowerUp);
+
+
     }
     #region Triggers
     private void OnTriggerEnter(Collider other)

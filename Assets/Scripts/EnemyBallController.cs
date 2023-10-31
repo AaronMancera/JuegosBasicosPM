@@ -19,8 +19,12 @@ public class EnemyBallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        direccionObjetivo = objetivo.transform.position - transform.position;
-        rb.AddForce(direccionObjetivo.normalized * speed);
+        //NOTE: Soluciona un futuro error para cuando muera el player
+        if (objetivo != null)
+        {
+            direccionObjetivo = objetivo.transform.position - transform.position;
+            rb.AddForce(direccionObjetivo.normalized * speed);
+        }
     }
     #region Trigger
     private void OnTriggerExit(Collider other)
