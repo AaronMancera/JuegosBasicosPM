@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - PlayZone
   - PowerUp
+  - JumpArea
+  - EnemiesGround
   layers:
   - Default
   - TransparentFX

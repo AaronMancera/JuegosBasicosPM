@@ -51,8 +51,8 @@ public class SpawnPowerUpScript : MonoBehaviour
             GameObject nuevoPowerUp = Instantiate(powerUpPrefab, GenerateSpawnPosition(), Quaternion.identity); ;
             //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[Random.Range(0, tipoPowerUpPrefabList.Count)], nuevoPowerUp.transform.position, Quaternion.identity);
             //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[0], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 0*/
-            GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[1], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 1*/
-            //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[2], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 2*/
+            //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[1], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 1*/
+            GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[2], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 2*/
 
 
             nuevoTipoPowerUp.transform.parent = nuevoPowerUp.transform;

@@ -21,9 +21,13 @@ public class PlayerBallController : MonoBehaviour
     //[SerializeField] private bool hasPowerUpStenght;
     private float powerupStrength;
     private GameObject indicadorPowerUp;
-    //NOTE: Contro de potenciador de cohetes *ADICIONAL*
+    //NOTE: Control de potenciador de cohetes *ADICIONAL*
     //[SerializeField] private bool hasPowerUpRocket;
     [SerializeField]private GameObject rocketPrefab;
+    //NOTE: Areas del super salto
+    [SerializeField] private GameObject jumpArea0;
+    [SerializeField] private GameObject jumpArea1;
+    private bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +39,8 @@ public class PlayerBallController : MonoBehaviour
         indicadorPowerUp = gameObject.transform.GetChild(0).gameObject;
         indicadorPowerUp.SetActive(false);
         powerUp = PowerUpEnum.Normal;
+        jumpArea0.SetActive(false);
+        jumpArea1.SetActive(false);
     }
 
     // Update is called once per frame
@@ -55,14 +61,35 @@ public class PlayerBallController : MonoBehaviour
             
         }
 
+        jumpArea0.transform.rotation=focalPoint.transform.rotation;
+
+        jumpArea1.transform.rotation = focalPoint.transform.rotation;
+
+
+        if (powerUp == PowerUpEnum.SuperSlam && Input.GetButton("Fire1") == true && isGrounded)
+        {
+            //TODO: Instancia un prefab del cohete que tenga un script que simplemente destruya con lo que impacte
+            saltoFuerte();
+            isGrounded = false;
+
+        }
+
+
 
     }
+    #region PowerUp
     private void dispararCohetes() 
     {
         Instantiate(rocketPrefab,transform.position,Quaternion.Euler(0,0,0));
         powerUp = PowerUpEnum.Normal;
         indicadorPowerUp.SetActive(false);
     }
+    private void saltoFuerte()
+    {
+        rb.AddForce(focalPoint.transform.up*500);
+
+    }
+    #endregion
     #region Triggers
     private void OnTriggerEnter(Collider other)
     {
@@ -75,14 +102,13 @@ public class PlayerBallController : MonoBehaviour
                 case string c when c.Contains("0"): /* Se declara una variable local que se va a utilizar para hacerle un contains en el interior*/
                     Debug.Log("Holaaa");
                     powerUp = PowerUpEnum.SuperStrength;
-                    StartCoroutine(PowerUpCountdownRoutine());
+                    StartCoroutine(PowerUpCountdownRoutine(7));
                     break;
                 case string c when c.Contains("1"):
                     powerUp = PowerUpEnum.RocketLauncher;
                     break;
                 case string c when c.Contains("2"):
                     powerUp = PowerUpEnum.SuperSlam;
-                    StartCoroutine(PowerUpCountdownRoutine());
                     break;
             }
             indicadorPowerUp.SetActive(true);
@@ -96,7 +122,9 @@ public class PlayerBallController : MonoBehaviour
         if(other.CompareTag("PlayZone"))
         {
             Destroy(gameObject);
-        }   
+        }
+        
+
     }
     #endregion
     #region Colisiones
@@ -112,18 +140,34 @@ public class PlayerBallController : MonoBehaviour
             Vector3 awayFromPlayer = collision.transform.position - transform.position;
             collision.rigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
         }
+
+        if(powerUp==PowerUpEnum.SuperSlam && collision.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("Hola");
+            jumpArea0.SetActive(true);
+            jumpArea1.SetActive(true);
+            StartCoroutine(PowerUpCountdownRoutine(1));
+        }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
     }
+  
     #endregion
     #region Rutinas
     /// <summary>
     /// Esto funcionara para crear un subproceso secundrario, en este caso esperara 7 segundos y cuando acabe el contador, le quitara el poder
     /// </summary>
     /// <returns></returns>
-    private IEnumerator PowerUpCountdownRoutine()
+    private IEnumerator PowerUpCountdownRoutine(int time)
     {
-        yield return new WaitForSeconds(7);
+        Debug.Log("h");
+        yield return new WaitForSeconds(time);
         powerUp = PowerUpEnum.Normal;
         indicadorPowerUp.SetActive(false);
+        jumpArea0.SetActive(false);
+        jumpArea1.SetActive(false);
     }
     #endregion
 }

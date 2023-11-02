@@ -71,7 +71,7 @@ public class EnemyBallController : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("EnemiesGround"))
         {
             MoverseHAciaElObjetivo();
         }
