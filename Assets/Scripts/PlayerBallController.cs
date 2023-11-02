@@ -48,12 +48,13 @@ public class PlayerBallController : MonoBehaviour
     #region Triggers
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PowerUp"))
+        if (other.CompareTag("PowerUp") && !hasPowerUp)
         {
             hasPowerUp = true;
             Destroy(other.gameObject);
             //NOTE: Inicia el subproceso
             StartCoroutine(PowerUpCountdownRoutine());
+            
         }
     }
     private void OnTriggerExit(Collider other)
