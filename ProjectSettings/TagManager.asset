@@ -10,6 +10,8 @@ TagManager:
   - PowerUp
   - JumpArea
   - EnemiesGround
+  - Bad
+  - Good
   layers:
   - Default
   - TransparentFX
