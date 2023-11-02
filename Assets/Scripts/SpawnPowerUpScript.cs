@@ -8,6 +8,7 @@ public class SpawnPowerUpScript : MonoBehaviour
     /// Controla la creacion de powerup durante el trascurso de la partida
     /// </summary>
     private GameObject powerUpPrefab;
+    [SerializeField] private List<GameObject> tipoPowerUpPrefabList;
     private float spawnRange = 9;
     // Start is called before the first frame update
     void Start()
@@ -47,7 +48,15 @@ public class SpawnPowerUpScript : MonoBehaviour
     {
         for (int i = 0; i < numPowerUp; i++)
         {
-            Instantiate(powerUpPrefab, GenerateSpawnPosition(), Quaternion.identity);
+            GameObject nuevoPowerUp = Instantiate(powerUpPrefab, GenerateSpawnPosition(), Quaternion.identity); ;
+            //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[Random.Range(0, tipoPowerUpPrefabList.Count)], nuevoPowerUp.transform.position, Quaternion.identity);
+            //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[0], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 0*/
+            GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[1], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 1*/
+            //GameObject nuevoTipoPowerUp = Instantiate(tipoPowerUpPrefabList[2], nuevoPowerUp.transform.position, Quaternion.identity); /*Fuerza que solo salga el 2*/
+
+
+            nuevoTipoPowerUp.transform.parent = nuevoPowerUp.transform;
+            
         }
     }
 }

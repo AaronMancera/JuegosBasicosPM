@@ -199,6 +199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482a0c2a955b64f448ff348a547b657a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tipoPowerUpPrefabList:
+  - {fileID: 107744, guid: 1630e34082d3fd447a66998d7adc8d6f, type: 3}
+  - {fileID: 135134, guid: 5d643332be492564d9c6a68125c3efae, type: 3}
+  - {fileID: 1744407837024274, guid: 256e76023dc97b14e97b75a1e8c86326, type: 3}
 --- !u!1001 &245963551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -377,7 +381,7 @@ GameObject:
   - component: {fileID: 534805882}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -508,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8427f4dcb43424cad462fad492b4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasPowerUp: 0
+  rocketPrefab: {fileID: 7348793593000063762, guid: 38780809c2f567e4ebb2c22ab55a1c99, type: 3}
 --- !u!1 &716180934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,7 +1542,7 @@ Transform:
   m_GameObject: {fileID: 2088094468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalPosition: {x: 0, y: -0.16, z: 0}
   m_LocalScale: {x: 5.8696938, y: 1, z: 4.9542}
   m_ConstrainProportionsScale: 0
   m_Children: []

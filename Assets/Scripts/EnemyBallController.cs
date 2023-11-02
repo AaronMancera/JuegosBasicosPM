@@ -16,36 +16,47 @@ public class EnemyBallController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb= GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         objetivo = GameObject.Find("Player");
         if (gameObject.name.Contains("EnemyLvl1Ball"))
         {
             speed = 1f;
-        } else
+        }
+        else
         {
             speed = 3f;
         }
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //NOTE: Soluciona un futuro error para cuando muera el player
-        if (onGround)
+        if (objetivo != null)
         {
-            if (objetivo != null)
-            {
-                direccionObjetivo = objetivo.transform.position - transform.position;
-            }
-            else
-            {
-                //NOTE:Aqui si hubiese reaparicion de objetivo se reasignaria el objetivo, por ahora que simplemente vayan al centro del mapa y ya
-                direccionObjetivo = new Vector3 (0f,0f,0f)- transform.position;
-            }
-            rb.AddForce(direccionObjetivo.normalized * speed);
-
+            direccionObjetivo = objetivo.transform.position - transform.position;
         }
+        else
+        {
+            //NOTE:Aqui si hubiese reaparicion de objetivo se reasignaria el objetivo, por ahora que simplemente vayan al centro del mapa y ya
+            direccionObjetivo = new Vector3(0f, 0f, 0f) - transform.position;
+        }
+        ////NOTE: Soluciona un futuro error para cuando muera el player
+        //if (onGround)
+        //{
+
+
+        //    rb.AddForce(direccionObjetivo.normalized * speed);
+
+        //}
+        
+
+
+    }
+
+    private void MoverseHAciaElObjetivo()
+    {
+        rb.AddForce(direccionObjetivo.normalized * speed);
 
     }
     #region Trigger
@@ -62,12 +73,9 @@ public class EnemyBallController : MonoBehaviour
     {
         if (other.CompareTag("Ground"))
         {
-            onGround = true;
+            MoverseHAciaElObjetivo();
         }
-        else
-        {
-            onGround=false; 
-        }
+          
         //No funciona si lo hago directamente, no se por que 
         //onGround = other.CompareTag("Ground");
 
