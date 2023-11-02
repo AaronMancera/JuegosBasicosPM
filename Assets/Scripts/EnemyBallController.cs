@@ -46,7 +46,6 @@ public class EnemyBallController : MonoBehaviour
             rb.AddForce(direccionObjetivo.normalized * speed);
 
         }
-        Debug.Log(onGround);
 
     }
     #region Trigger
