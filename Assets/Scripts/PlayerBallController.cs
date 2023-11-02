@@ -15,17 +15,20 @@ public class PlayerBallController : MonoBehaviour
     //NOTE: El gameObject vacio que contiene solo a la camara
     private GameObject focalPoint;
 
-    //NOTE: Control de potenciador
-    [SerializeField] private bool hasPowerUp;
+    //NOTE: Control de potenciador de supergolpe
+    [SerializeField] private bool hasPowerUpStenght;
     private float powerupStrength;
     private GameObject indicadorPowerUp;
+    //NOTE: Contro de potenciador de cohetes *ADICIONAL*
+    [SerializeField] private bool hasPowerUpRocket;
+    private GameObject rocketPrefab;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         speed = 5f;
         focalPoint = GameObject.Find("FocalPoint");
-        hasPowerUp = false;
+        hasPowerUpStenght = false;
         powerupStrength = 50f;
         indicadorPowerUp = gameObject.transform.GetChild(0).gameObject;
         indicadorPowerUp.SetActive(false);
@@ -41,18 +44,33 @@ public class PlayerBallController : MonoBehaviour
         indicadorPowerUp.transform.position=new Vector3(transform.position.x,transform.position.y+1,transform.position.z);
         indicadorPowerUp.transform.rotation = Quaternion.Euler(0, 0, 0);
         //NOTE: simplemente con tener el boolean, este lo activara o lo desactivara
-        indicadorPowerUp.SetActive(hasPowerUp);
+        indicadorPowerUp.SetActive(hasPowerUpStenght);
+        if(hasPowerUpRocket && Input.GetButton("Fire1")==true)
+        {
+            //TODO: Instancia un prefab del cohete que tenga un script que simplemente destruya con lo que impacte
+        }
 
 
+    }
+    private void dispararCohetes() 
+    {
+        
     }
     #region Triggers
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PowerUp") && !hasPowerUp)
+        if (other.CompareTag("PowerUp") && !hasPowerUpStenght)
         {
-            hasPowerUp = true;
+            switch (other.gameObject.transform.GetChild(0).gameObject.name)
+            {
+                case "PowerIcon":
+                    hasPowerUpStenght = true;
+                    break;
+                case "FireIcon":
+                    hasPowerUpRocket = true; 
+                    break;
+            }
             Destroy(other.gameObject);
-            //NOTE: Inicia el subproceso
             StartCoroutine(PowerUpCountdownRoutine());
             
         }
@@ -68,7 +86,7 @@ public class PlayerBallController : MonoBehaviour
     #region Colisiones
     private void OnCollisionEnter(Collision collision)
     {
-        if (hasPowerUp && collision.gameObject.CompareTag("Enemy"))
+        if (hasPowerUpStenght && collision.gameObject.CompareTag("Enemy"))
         {
             Vector3 awayFromPlayer = collision.transform.position - transform.position;
             collision.rigidbody.AddForce(awayFromPlayer*powerupStrength,ForceMode.Impulse);
@@ -83,7 +101,8 @@ public class PlayerBallController : MonoBehaviour
     private IEnumerator PowerUpCountdownRoutine()
     {
         yield return new WaitForSeconds(7);
-        hasPowerUp = false;
+        hasPowerUpStenght = false;
+        hasPowerUpRocket = false;
     }
     #endregion
 }
