@@ -7,8 +7,10 @@ public class SpawnEnemiesScript : MonoBehaviour
     /// <summary>
     /// Controla la creacion de los enemigos durante el trascurso de la partida
     /// </summary>
-    private GameObject enemyPrefab;
+    //private GameObject enemyPrefab;
     private float spawnRange = 9;
+
+    private List<GameObject> enemiesPrefabs;
     
     // Start is called before the first frame update
     void Start()
@@ -24,9 +26,22 @@ public class SpawnEnemiesScript : MonoBehaviour
     /// Se le pasa por parametro desde el controlador de juego el prefab para poder instanciarlo
     /// </summary>
     /// <param name="enemyPrefab"></param>
-    public void SetEnemyPrefab(GameObject enemyPrefab)
+    //public void SetEnemyPrefab(GameObject enemyPrefab)
+    //{
+    //    this.enemyPrefab = enemyPrefab;
+    //}
+
+    /*
+     *  ADICIONAL
+     */
+
+    /// <summary>
+    /// Se le pasa por parametro la lista de enemigos desde el controlador de juego para poder instanciarlo
+    /// </summary>
+    /// <param name="enemiesPrefabs"></param>
+    public void SetEnemiesPrefab(List<GameObject> enemiesPrefabs)
     {
-        this.enemyPrefab = enemyPrefab;
+        this.enemiesPrefabs = enemiesPrefabs;
     }
     /// <summary>
     /// Devuelve una posicion aleatoria para instanciar el objeto
@@ -47,7 +62,8 @@ public class SpawnEnemiesScript : MonoBehaviour
     {
         for (int i = 0; i < numEnemigos; i++)
         {
-            Instantiate(enemyPrefab, GenerateSpawnPosition(), Quaternion.identity);
+            //Instantiate(enemyPrefab, GenerateSpawnPosition(), Quaternion.identity);
+            Instantiate(enemiesPrefabs[Random.Range(0,enemiesPrefabs.Count)], GenerateSpawnPosition(), Quaternion.identity);
         }
     }
 }

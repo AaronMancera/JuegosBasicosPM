@@ -11,23 +11,34 @@ public class EnemyBallController : MonoBehaviour
     private Rigidbody rb;
     private GameObject objetivo;
     private Vector3 direccionObjetivo;
+    //NOTE: Arregla este bool que la bola regrese de la caida
+    private bool onGround;
     // Start is called before the first frame update
     void Start()
     {
         rb= GetComponent<Rigidbody>();
         objetivo = GameObject.Find("Player");
-        speed = 3f;
+        if (gameObject.name.Contains("EnemyLvl1Ball"))
+        {
+            speed = 1f;
+        } else
+        {
+            speed = 3f;
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         //NOTE: Soluciona un futuro error para cuando muera el player
-        if (objetivo != null)
+        if (objetivo != null && onGround)
         {
             direccionObjetivo = objetivo.transform.position - transform.position;
             rb.AddForce(direccionObjetivo.normalized * speed);
         }
+        Debug.Log(onGround);
+
     }
     #region Trigger
 
@@ -37,6 +48,24 @@ public class EnemyBallController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            onGround = true;
+        }
+        else
+        {
+            onGround=false; 
+        }
+        //No funciona si lo hago directamente, no se por que 
+        //onGround = other.CompareTag("Ground");
+
+    }
+    #endregion
+    #region Colision
+
     #endregion
 }
