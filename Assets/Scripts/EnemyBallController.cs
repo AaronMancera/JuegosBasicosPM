@@ -32,10 +32,19 @@ public class EnemyBallController : MonoBehaviour
     void Update()
     {
         //NOTE: Soluciona un futuro error para cuando muera el player
-        if (objetivo != null && onGround)
+        if (onGround)
         {
-            direccionObjetivo = objetivo.transform.position - transform.position;
+            if (objetivo != null)
+            {
+                direccionObjetivo = objetivo.transform.position - transform.position;
+            }
+            else
+            {
+                //NOTE:Aqui si hubiese reaparicion de objetivo se reasignaria el objetivo, por ahora que simplemente vayan al centro del mapa y ya
+                direccionObjetivo = new Vector3 (0f,0f,0f)- transform.position;
+            }
             rb.AddForce(direccionObjetivo.normalized * speed);
+
         }
         Debug.Log(onGround);
 
