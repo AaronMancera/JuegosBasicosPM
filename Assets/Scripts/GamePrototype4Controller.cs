@@ -10,12 +10,14 @@ public class GamePrototype4Controller : MonoBehaviour
     /// </summary>
     private SpawnEnemiesScript spawnEnemiesScript;
     [SerializeField] private int ronda;
-    private GameObject [] listaDeEnemigos;
+    private GameObject[] listaDeEnemigos;
     //[SerializeField] private GameObject enemyPrefab;
     [SerializeField] private TMP_Text textoRonda;
     [SerializeField] private GameObject powerUpPrefab;
 
     [SerializeField] private List<GameObject> enemiesPrefabs;
+    [SerializeField] private GameObject bossEnemy;
+
 
 
     private SpawnPowerUpScript spawnPowerUpScript;
@@ -31,6 +33,7 @@ public class GamePrototype4Controller : MonoBehaviour
         spawnEnemiesScript.SetEnemiesPrefab(enemiesPrefabs);
         spawnPowerUpScript = GetComponent<SpawnPowerUpScript>();
         spawnPowerUpScript.setPowerUpPrefab(powerUpPrefab);
+        spawnEnemiesScript.SetEnemyBoss(bossEnemy);
     }
 
     // Update is called once per frame
@@ -38,11 +41,20 @@ public class GamePrototype4Controller : MonoBehaviour
     {
         textoRonda.text = "" + ronda;
         listaDeEnemigos = GameObject.FindGameObjectsWithTag("Enemy");
-        if(listaDeEnemigos.Length <= 0)
+        if (listaDeEnemigos.Length <= 0)
         {
             ronda += 1;
-            spawnEnemiesScript.CrearEnemigo(ronda);
-            spawnPowerUpScript.CrearPowerUp(ronda);
+            if (ronda % 5 == 0) /*Cada 5 rondas aparecera un boss*/
+            {
+                spawnEnemiesScript.CrearBoss(ronda);
+                spawnPowerUpScript.CrearPowerUp(ronda);
+
+            }
+            else
+            {
+                spawnEnemiesScript.CrearEnemigo(ronda);
+                spawnPowerUpScript.CrearPowerUp(ronda);
+            }
         }
     }
 }

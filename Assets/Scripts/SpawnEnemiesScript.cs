@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnEnemiesScript : MonoBehaviour
@@ -11,16 +12,18 @@ public class SpawnEnemiesScript : MonoBehaviour
     private float spawnRange = 9;
 
     private List<GameObject> enemiesPrefabs;
-    
+    private GameObject bossPrefab;
+
+    private bool rondaBoss;
     // Start is called before the first frame update
     void Start()
     {
+        rondaBoss = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
     /// <summary>
     /// Se le pasa por parametro desde el controlador de juego el prefab para poder instanciarlo
@@ -42,6 +45,15 @@ public class SpawnEnemiesScript : MonoBehaviour
     public void SetEnemiesPrefab(List<GameObject> enemiesPrefabs)
     {
         this.enemiesPrefabs = enemiesPrefabs;
+    }
+
+    public void SetEnemyBoss(GameObject bossPrefab)
+    {
+        this.bossPrefab = bossPrefab;  
+    }
+    public void SetRondaBoss(bool rondaBoss)
+    {
+        this.rondaBoss = rondaBoss;
     }
     /// <summary>
     /// Devuelve una posicion aleatoria para instanciar el objeto
@@ -65,5 +77,22 @@ public class SpawnEnemiesScript : MonoBehaviour
             //Instantiate(enemyPrefab, GenerateSpawnPosition(), Quaternion.identity);
             Instantiate(enemiesPrefabs[Random.Range(0,enemiesPrefabs.Count)], GenerateSpawnPosition(), Quaternion.identity);
         }
+    }
+    //NOTE: Generar un bos con una oleada de 2 enemigos cada 10 segundos /*ADICIONAL*/
+    public void CrearBoss(int numEnemigos) /*El boss tendra hara aparecer subditos cada cierto tiempo, e incrementara el numero de subditos segun la ronda*/
+    {
+        Instantiate(bossPrefab, GenerateSpawnPosition(), Quaternion.identity);
+        rondaBoss = true;
+        for (int i = 0; i < numEnemigos/2; i++)
+        {
+            StartCoroutine(GenerarEnemigosCoutdown(3*i));
+        }
+
+    }
+    private IEnumerator GenerarEnemigosCoutdown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        CrearEnemigo(2);
+
     }
 }

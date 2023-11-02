@@ -22,6 +22,10 @@ public class EnemyBallController : MonoBehaviour
         {
             speed = 1f;
         }
+        else if (gameObject.name.Contains("EnemyBossBall"))
+        {
+            speed = 20f;
+        }
         else
         {
             speed = 3f;
@@ -49,7 +53,7 @@ public class EnemyBallController : MonoBehaviour
         //    rb.AddForce(direccionObjetivo.normalized * speed);
 
         //}
-        
+
 
 
     }
@@ -74,9 +78,10 @@ public class EnemyBallController : MonoBehaviour
         //Al afectarle el primero luego se come el segundo
         if (other.name == "AreaFuerte")
         {
-            Vector3 awayFromPlayer =transform.position - objetivo.transform.position;
+            Vector3 awayFromPlayer = transform.position - objetivo.transform.position;
             rb.AddForce(awayFromPlayer * 5, ForceMode.Impulse);
-        }else if (other.name == "AreaDebil")
+        }
+        else if (other.name == "AreaDebil")
         {
             Vector3 awayFromPlayer = transform.position - objetivo.transform.position;
             rb.AddForce(awayFromPlayer * 1, ForceMode.Impulse);
@@ -88,7 +93,7 @@ public class EnemyBallController : MonoBehaviour
         {
             MoverseHAciaElObjetivo();
         }
-          
+
         //No funciona si lo hago directamente, no se por que 
         //onGround = other.CompareTag("Ground");
 
