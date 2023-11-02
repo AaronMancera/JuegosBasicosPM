@@ -175,6 +175,7 @@ MonoBehaviour:
   enemiesPrefabs:
   - {fileID: 7348793593000063762, guid: 4406bb8f506040642a2ff3c6e57f0288, type: 3}
   - {fileID: 7348793593000063762, guid: 767578fab585e554bb13881fff05c0fc, type: 3}
+  bossEnemy: {fileID: 7348793593000063762, guid: 5598da051a3e7cf4fa140bfdfdf63636, type: 3}
 --- !u!114 &99547017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +432,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442180841}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -827,8 +828,8 @@ Transform:
   m_GameObject: {fileID: 908531144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.08, z: 0}
-  m_LocalScale: {x: 5, y: 0.1, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 7, y: 0.1, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 534805881}
@@ -861,7 +862,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908531144}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
