@@ -61,9 +61,7 @@ public class PlayerBallController : MonoBehaviour
             
         }
 
-        jumpArea0.transform.rotation=focalPoint.transform.rotation;
-
-        jumpArea1.transform.rotation = focalPoint.transform.rotation;
+     
 
 
         if (powerUp == PowerUpEnum.SuperSlam && Input.GetButton("Fire1") == true && isGrounded)
@@ -96,11 +94,10 @@ public class PlayerBallController : MonoBehaviour
         
         if (other.CompareTag("PowerUp") && powerUp == PowerUpEnum.Normal)
         {
-            Debug.Log(other.gameObject.transform.GetChild(0).gameObject.name); /*Coge el nombre del icono del poder*/
+            //Debug.Log(other.gameObject.transform.GetChild(0).gameObject.name); /*Coge el nombre del icono del poder*/
             switch (other.gameObject.transform.GetChild(0).gameObject.name)
             {
                 case string c when c.Contains("0"): /* Se declara una variable local que se va a utilizar para hacerle un contains en el interior*/
-                    Debug.Log("Holaaa");
                     powerUp = PowerUpEnum.SuperStrength;
                     StartCoroutine(PowerUpCountdownRoutine(7));
                     break;
@@ -143,10 +140,9 @@ public class PlayerBallController : MonoBehaviour
 
         if(powerUp==PowerUpEnum.SuperSlam && collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("Hola");
             jumpArea0.SetActive(true);
             jumpArea1.SetActive(true);
-            StartCoroutine(PowerUpCountdownRoutine(1));
+            StartCoroutine(PowerUpCountdownRoutine(0.5f));
         }
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -160,9 +156,8 @@ public class PlayerBallController : MonoBehaviour
     /// Esto funcionara para crear un subproceso secundrario, en este caso esperara 7 segundos y cuando acabe el contador, le quitara el poder
     /// </summary>
     /// <returns></returns>
-    private IEnumerator PowerUpCountdownRoutine(int time)
+    private IEnumerator PowerUpCountdownRoutine(float time)
     {
-        Debug.Log("h");
         yield return new WaitForSeconds(time);
         powerUp = PowerUpEnum.Normal;
         indicadorPowerUp.SetActive(false);

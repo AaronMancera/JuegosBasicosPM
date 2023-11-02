@@ -69,6 +69,19 @@ public class EnemyBallController : MonoBehaviour
         }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        //Al afectarle el primero luego se come el segundo
+        if (other.name == "AreaFuerte")
+        {
+            Vector3 awayFromPlayer =transform.position - objetivo.transform.position;
+            rb.AddForce(awayFromPlayer * 5, ForceMode.Impulse);
+        }else if (other.name == "AreaDebil")
+        {
+            Vector3 awayFromPlayer = transform.position - objetivo.transform.position;
+            rb.AddForce(awayFromPlayer * 1, ForceMode.Impulse);
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("EnemiesGround"))
