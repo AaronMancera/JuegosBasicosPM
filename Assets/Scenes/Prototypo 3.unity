@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93f8dabd8553f148ab722cd9e84f97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 3
+  jumpForce: 5
   actionJumpInput: 0
   explosionParticle: {fileID: 1508128793}
   polvoParticle: {fileID: 1153816906}
@@ -540,6 +540,7 @@ MonoBehaviour:
   crashSound: {fileID: 8300000, guid: 4bcde6de2166e41e284ec46d8a01fb90, type: 3}
   playerAudio: {fileID: 0}
   extraJump: 1
+  lineaDeDobleSalto: 0
 --- !u!4 &1314238827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f147a01ef442b2345a3546109476c690, type: 3}
