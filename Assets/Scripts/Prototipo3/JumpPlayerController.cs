@@ -20,6 +20,8 @@ public class JumpPlayerController : MonoBehaviour
 
     //NOTE:*Ampliación*
     [SerializeField] private int extraJump;
+    [SerializeField] private float lineaDeDobleSalto;
+    private int startExtraJump;
 
 
     // Start is called before the first frame update
@@ -31,24 +33,17 @@ public class JumpPlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         gameOver = false;
         playerAudio = GetComponent<AudioSource>();
+        startExtraJump=extraJump;
+        lineaDeDobleSalto= transform.position.y + 0.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
         //NOTE: Por defecto en el project settings es en la tecla Space
-        actionJumpInput = Input.GetButton("Jump");
+        //actionJumpInput = Input.GetButton("Jump");
+        actionJumpInput = Input.GetKeyDown(KeyCode.Space);
 
-        ////NOTE: Siempre que salte y este ture el input de salto
-        //if (ground && actionJumpInput)
-        //{
-        //    jump();
-
-        //}
-
-    }
-    private void FixedUpdate()
-    {
         //NOTE: Siempre que salte y este ture el input de salto
         if (ground && actionJumpInput && !gameOver)
         {
@@ -56,17 +51,35 @@ public class JumpPlayerController : MonoBehaviour
 
         }
         //ERR: Hace los dos saltos a la vez por alguna extraña razon
-        else if (!ground && actionJumpInput && !gameOver && extraJump > 0)
+        else if (!ground && actionJumpInput && !gameOver && extraJump > 0 && transform.position.y > lineaDeDobleSalto)
         {
-            jump();
-            extraJump--;
+            exJump();
         }
+        ////NOTE: Siempre que salte y este ture el input de salto
+        //if (ground && actionJumpInput)
+        //{
+        //    jump();
+
+        //}
+        if (extraJump <= 0 && ground)
+        {
+            extraJump = startExtraJump;
+
+        }
+
     }
+
     private void jump()
     {
         //NOTE: En rigibody se aplica una fuerza een una direcion (direccion * fuerza) y se aplica de manera secuencial
         //NOTE: Poner la jump force con 50 para saltar los obstaculos
-        rigibody.AddForce(transform.up * jumpForce);
+        //rigibody.AddForce(transform.up * jumpForce);
+        rigibody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+    }
+    private void exJump()
+    {
+        rigibody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        extraJump--;
     }
 
     #region Colisiones
