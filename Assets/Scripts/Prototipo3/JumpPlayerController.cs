@@ -66,6 +66,14 @@ public class JumpPlayerController : MonoBehaviour
             extraJump = startExtraJump;
 
         }
+        //NOTE: *Adicional* SuperVelocidad
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+
+        }
+        else
+        {
+        }
 
     }
 
@@ -80,6 +88,14 @@ public class JumpPlayerController : MonoBehaviour
     {
         rigibody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         extraJump--;
+    }
+    private void modoNormal()
+    {
+        Time.timeScale = 1;
+    }
+    private void modoSuperVelocidad()
+    {
+        Time.timeScale = 2;
     }
 
     #region Colisiones
