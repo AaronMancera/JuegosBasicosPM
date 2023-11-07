@@ -93,9 +93,10 @@ GameObject:
   m_Component:
   - component: {fileID: 451096}
   - component: {fileID: 7005709880665628751}
+  - component: {fileID: 4377719371143822192}
   m_Layer: 0
   m_Name: Prop_Barrier02
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,3 +138,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.7544992, z: 3.0070117}
   m_Center: {x: 0, y: 1.0209612, z: -0.044160485}
+--- !u!114 &4377719371143822192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6709bb1406df07c47a2b995b81c4ceb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

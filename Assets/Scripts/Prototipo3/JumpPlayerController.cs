@@ -11,6 +11,8 @@ public class JumpPlayerController : MonoBehaviour
     public static bool gameOver;
     //NOTE: Animator controller que viene por defecto en el personaje
     private Animator anim;
+    [SerializeField] private ParticleSystem explosionParticle;
+    [SerializeField] private ParticleSystem polvoParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,7 @@ public class JumpPlayerController : MonoBehaviour
         //    jump();
 
         //}
+        
     }
     private void FixedUpdate()
     {
@@ -59,7 +62,7 @@ public class JumpPlayerController : MonoBehaviour
         {
             ground = false;
             anim.SetTrigger("Jump_trig");
-
+            polvoParticle.Stop();
         }
     }
     //NOTE: Detectar con que colision se encuentra chocando
@@ -73,6 +76,9 @@ public class JumpPlayerController : MonoBehaviour
             gameOver = true;
             anim.SetBool("Death_b", true);
             anim.SetInteger("DeathType_int", 1);
+            explosionParticle.Play();
+            polvoParticle.Stop();
+
         }
 
     }
@@ -80,7 +86,7 @@ public class JumpPlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-
+            polvoParticle.Play();
             ground = true;
         }
     }
