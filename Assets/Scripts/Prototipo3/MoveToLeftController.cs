@@ -18,10 +18,13 @@ public class MoveToLeftController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime); //movimiento a del objeto hacia el jugador
-        if (gameObject.transform.position.z <= lineaDestroyZ)
+        if (!JumpPlayerController.gameOver)
         {
-            Destroy(gameObject);
+            gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime); //movimiento a del objeto hacia el jugador
+            if (gameObject.transform.position.z <= lineaDestroyZ)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

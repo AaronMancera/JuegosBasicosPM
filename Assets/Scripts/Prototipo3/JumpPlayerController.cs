@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class JumpPlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
     private Rigidbody rigibody;
     private bool ground;
     [SerializeField] private float jumpForce;
-     private bool actionJumpInput;
+    [SerializeField] private bool actionJumpInput;
+    public static bool gameOver;
+    //NOTE: Animator controller que viene por defecto en el personaje
+    private Animator anim;
+
+    // Start is called before the first frame update
     void Start()
     {
         //NOTE:Recogemos el rigibody para poder hacer que salte
         rigibody = gameObject.GetComponent<Rigidbody>();
         ground = false;
+        anim = GetComponent<Animator>();
+        gameOver = false;
     }
 
     // Update is called once per frame
@@ -22,8 +28,17 @@ public class JumpPlayerController : MonoBehaviour
         //NOTE: Por defecto en el project settings es en la tecla Space
         actionJumpInput = Input.GetButton("Jump");
 
+        ////NOTE: Siempre que salte y este ture el input de salto
+        //if (ground && actionJumpInput)
+        //{
+        //    jump();
+
+        //}
+    }
+    private void FixedUpdate()
+    {
         //NOTE: Siempre que salte y este ture el input de salto
-        if (ground && actionJumpInput)
+        if (ground && actionJumpInput && !gameOver)
         {
             jump();
 
@@ -33,8 +48,7 @@ public class JumpPlayerController : MonoBehaviour
     {
         //NOTE: En rigibody se aplica una fuerza een una direcion (direccion * fuerza) y se aplica de manera secuencial
         //NOTE: Poner la jump force con 50 para saltar los obstaculos
-        rigibody.AddForce(transform.up * jumpForce); 
-
+        rigibody.AddForce(transform.up * jumpForce);
     }
 
     #region Colisiones
@@ -44,22 +58,31 @@ public class JumpPlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             ground = false;
+            anim.SetTrigger("Jump_trig");
+
         }
     }
     //NOTE: Detectar con que colision se encuentra chocando
-    void OnCollisionStay(Collision collision)
+    private void OnCollisionStay(Collision collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Muerto");
+            //Time.timeScale = 0;
+            gameOver = true;
+            anim.SetBool("Death_b", true);
+            anim.SetInteger("DeathType_int", 1);
+        }
+
+    }
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
 
             ground = true;
         }
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Muerto");
-            Time.timeScale = 0;
-        }
-
     }
     #endregion Colisiones
 }

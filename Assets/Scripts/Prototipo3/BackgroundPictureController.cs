@@ -17,12 +17,15 @@ public class BackgroundPictureController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //NOTE: Mueve a la izquiera el plano con la imagen
-        gameObject.transform.Translate(Vector3.right * speed * Time.deltaTime);
-        //NOTe: Cuando se pasa de la izquierda para repetirse, la movemos a la derecha del otro
-        if (gameObject.transform.position.z <= posZDesplazarMaximo)
+        if (!JumpPlayerController.gameOver)
         {
-            gameObject.transform.position = puntoDeAparicion;
+            //NOTE: Mueve a la izquiera el plano con la imagen
+            gameObject.transform.Translate(Vector3.right * speed * Time.deltaTime);
+            //NOTe: Cuando se pasa de la izquierda para repetirse, la movemos a la derecha del otro
+            if (gameObject.transform.position.z <= posZDesplazarMaximo)
+            {
+                gameObject.transform.position = puntoDeAparicion;
+            }
         }
     }
 }
