@@ -13,6 +13,14 @@ public class JumpPlayerController : MonoBehaviour
     private Animator anim;
     [SerializeField] private ParticleSystem explosionParticle;
     [SerializeField] private ParticleSystem polvoParticle;
+    //NOTE: Sonidos
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip crashSound;
+    [SerializeField] private AudioSource playerAudio;
+
+    //NOTE:*Ampliación*
+    [SerializeField] private int extraJump;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +30,7 @@ public class JumpPlayerController : MonoBehaviour
         ground = false;
         anim = GetComponent<Animator>();
         gameOver = false;
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,7 +45,7 @@ public class JumpPlayerController : MonoBehaviour
         //    jump();
 
         //}
-        
+
     }
     private void FixedUpdate()
     {
@@ -45,6 +54,12 @@ public class JumpPlayerController : MonoBehaviour
         {
             jump();
 
+        }
+        //ERR: Hace los dos saltos a la vez por alguna extraña razon
+        else if (!ground && actionJumpInput && !gameOver && extraJump > 0)
+        {
+            jump();
+            extraJump--;
         }
     }
     private void jump()
@@ -62,13 +77,14 @@ public class JumpPlayerController : MonoBehaviour
         {
             ground = false;
             anim.SetTrigger("Jump_trig");
+            playerAudio.PlayOneShot(jumpSound, 1.0f);
             polvoParticle.Stop();
         }
     }
     //NOTE: Detectar con que colision se encuentra chocando
     private void OnCollisionStay(Collision collision)
     {
-        
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Muerto");
@@ -78,6 +94,7 @@ public class JumpPlayerController : MonoBehaviour
             anim.SetInteger("DeathType_int", 1);
             explosionParticle.Play();
             polvoParticle.Stop();
+            playerAudio.PlayOneShot(crashSound, 1.0f);
 
         }
 
