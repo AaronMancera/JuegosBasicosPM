@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundPictureController : MonoBehaviour
 {
-    [SerializeField] private int speed;
+    [SerializeField] private float speed;
     private float posZDesplazarMaximo;
     private Vector3 puntoDeAparicion;
     // Start is called before the first frame update
@@ -27,5 +27,9 @@ public class BackgroundPictureController : MonoBehaviour
                 gameObject.transform.position = puntoDeAparicion;
             }
         }
+    }
+    public void setSpeed(float speed)
+    {
+        this.speed = speed;
     }
 }

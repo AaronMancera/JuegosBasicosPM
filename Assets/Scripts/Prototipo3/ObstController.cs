@@ -6,15 +6,23 @@ public class ObstController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> listObstaculosPrefabs;
     //NOTE: El lugar donde vamos a coger de referencia para aparecer el objeto
-    private float lineaSpwanZ; 
+    private float lineaSpwanZ;
     [SerializeField] private float segSpawnSpeed;
     private float startSegSpawnSpeed;
-
+    //*Adicional*: Velocidad de movimiento
+    private AudioSource cameraAudioSource;
+    private MoveToLeftController moveToLeftController;
+    [SerializeField] private BackgroundPictureController backgroundPictureController1;
+    [SerializeField] private BackgroundPictureController backgroundPictureController2;
+    [SerializeField] private JumpPlayerController jumpPlayerController;
+    //*Puntuacion*
+    public static float puntuacion;
     // Start is called before the first frame update
     void Start()
     {
         startSegSpawnSpeed = segSpawnSpeed;
         lineaSpwanZ = 13;
+        cameraAudioSource = Camera.main.GetComponent<AudioSource>();
 
     }
 
@@ -34,11 +42,46 @@ public class ObstController : MonoBehaviour
                 }
                 //NOTE: Le asignamos el tag al gameobject nuevo
                 gameObjectNuevo.tag = "Enemy";
-                Quaternion angulo = new Quaternion(0, 90, 0, 0); //Esto es para girarlo y que este mirando para el jugador
+                Quaternion angulo = Quaternion.Euler(0, -180, 0); //Esto es para girarlo y que este mirando para el jugador
                 Instantiate(gameObjectNuevo, new Vector3(1.5f, 0.27f, lineaSpwanZ), angulo);
                 segSpawnSpeed = startSegSpawnSpeed;
+                moveToLeftController = gameObjectNuevo.GetComponent<MoveToLeftController>();
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && jumpPlayerController.getFinAnimacionPrincipal())
+            {
+                cameraAudioSource.pitch = 2;
+                if (moveToLeftController != null)
+                {
+                    moveToLeftController.setSpeed(10f);
+                }
+                backgroundPictureController1.setSpeed(10f);
+                backgroundPictureController2.setSpeed(10f);
+
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                cameraAudioSource.pitch = 1;
+                if (moveToLeftController != null)
+                {
+                    moveToLeftController.setSpeed(5f);
+                }
+                backgroundPictureController1.setSpeed(5f);
+                backgroundPictureController2.setSpeed(5f);
             }
         }
+        else
+        {
+            cameraAudioSource.pitch = 1;
+            if (moveToLeftController != null)
+            {
+                moveToLeftController.setSpeed(5f);
+            }
+            backgroundPictureController1.setSpeed(5f);
+            backgroundPictureController2.setSpeed(5f);
+        }
+
 
     }
 
