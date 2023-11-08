@@ -7,7 +7,7 @@ public class DifficultyButton : MonoBehaviour
 {
     private Button button;
     private GameManager gameManager;
-    public int difficulty; /*Este parametro hay que ajustarlo en el inspector*/
+    [SerializeField] private int difficulty; /*Este parametro hay que ajustarlo en el inspector*/
     // Start is called before the first frame update
     void Start()
     {

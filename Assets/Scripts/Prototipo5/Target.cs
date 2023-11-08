@@ -11,8 +11,8 @@ public class Target : MonoBehaviour
     private float xRange = 4;
     private float ySpawnPos = -2;
     private GameManager gameManager;
-    public int pointValue;
-    public ParticleSystem explosionParticle;
+    [SerializeField] private int pointValue;
+    [SerializeField] private ParticleSystem explosionParticle;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,9 +53,9 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        if (!gameObject.CompareTag("Bad"))
+        if (!gameObject.CompareTag("Bad") && gameManager.isGameActive)
         {
-            gameManager.GameOver();
+            gameManager.RestarUnavida();
         }
     }
 
