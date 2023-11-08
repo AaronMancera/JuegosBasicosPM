@@ -65,7 +65,9 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
+            //NOTE: Generacion de objetos
             Instantiate(targets[index]);
+
         }
     }
    
