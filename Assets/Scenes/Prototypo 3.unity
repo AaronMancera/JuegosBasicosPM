@@ -1199,7 +1199,7 @@ MonoBehaviour:
   segSpawnSpeed: 6
   backgroundPictureController1: {fileID: 8046128579844601724}
   backgroundPictureController2: {fileID: 1254102282}
-  jumpPlayerController: {fileID: 0}
+  jumpPlayerController: {fileID: 1314238825}
 --- !u!4 &2053255932
 Transform:
   m_ObjectHideFlags: 0
