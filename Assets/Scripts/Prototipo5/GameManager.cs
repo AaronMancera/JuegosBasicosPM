@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     /*Adicional - Pausar Juego*/
     private bool juegoPausado;
     [SerializeField] private GameObject pauseScreen;
+    /*Adicional - Estela que sigue donde donde pulser el jugador*/
+    CorteController corteController;
     
 
     // Start is called before the first frame update
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
         //NOTE:Le asignamos el metodo al slider
         volumenSlider.onValueChanged.AddListener(SetMusicLevel);
         volumenSlider.value = 0.5f;
+        corteController=GetComponent<CorteController>();
     }
     // Update is called once per frame
     void Update()
@@ -54,10 +57,26 @@ public class GameManager : MonoBehaviour
         {
             PausarJuego();
         }
-        if (isGameActive)
+        if (isGameActive && Input.GetMouseButton(0))
         {
+            
             Raton();
         }
+
+        //NOTE: El control del raton debe de hacerse aparte de si el juego esta activo ya que o sino genera una serie de bug a la hora de generar el corte
+        if (Input.GetMouseButtonDown(0))
+        {
+            corteController.DestroyTrailActual();
+            corteController.CrearTrailActual();
+            corteController.AddPunto();
+        }
+        if (Input.GetMouseButton(0))
+        {
+            corteController.AddPunto();
+        }
+        corteController.UpdatePuntosTrail();
+        corteController.LimpiarPuntosTrail();
+
     }
     /// <summary>
     /// Método públic donde se le pasara el score por parametro y lo actualizara
@@ -123,7 +142,6 @@ public class GameManager : MonoBehaviour
         
         volumen = Mathf.Log10(sliderValue) * 20;
         mixer.SetFloat("MusicVol", volumen);
-        Debug.Log("VolumenCambiado: "+volumen);
     }
     public void PausarJuego()
     {
@@ -150,8 +168,6 @@ public class GameManager : MonoBehaviour
         {
             Target target = hit.collider.gameObject.GetComponent<Target>();
             target.OnPlayerDestroyMe();
-            
-           
         }
     }
 

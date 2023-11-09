@@ -5,41 +5,108 @@ using UnityEngine;
 public class CorteController : MonoBehaviour
 {
     /*Adicional - Hacer clic y deslizar*/
-    public float width = 0.01f;
-    public Color color = Color.red;
-    private LineRenderer lr;
-    private Vector3[] linePoints = new Vector3[2];
+    [SerializeField] LineRenderer trailPrefab = null;
+    [SerializeField] private float limpiezaSpeed;
+    private float distancia = 1;
 
-    void Start()
+    private LineRenderer traiActual;
+    private List<Vector3> puntosDelTrail = new List<Vector3>();
+    private void Start()
     {
-        lr = GetComponent<LineRenderer>();
-        if (!lr) lr = gameObject.AddComponent<LineRenderer>();
-        lr.material.color = color;
-        lr.widthMultiplier = width;
-        linePoints[0] = Vector3.zero;
-        lr.positionCount = linePoints.Length;
+    }
+    private void Update()
+    {
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    DestroyTrailActual();
+        //    CrearTrailActual();
+        //    AddPunto();
+        //}
+        //if (Input.GetMouseButton(0))
+        //{
+        //    AddPunto();
+        //}
+        //UpdatePuntosTrail();
+        //LimpiarPuntosTrail();
     }
 
-    void Update()
+    /// <summary>
+    /// Se llamara cuando queramos generar otra linea de corte
+    /// </summary>
+    public void DestroyTrailActual()
     {
-        if (Input.GetMouseButton(0))
+        if (traiActual != null)
         {
-            if (lr.enabled == false) lr.enabled = true;
-            Camera c = Camera.main;
-            Vector3 p = c.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, c.nearClipPlane));
-            linePoints[1] = p;
-            lr.SetPositions(linePoints);
+            Destroy(traiActual.gameObject);
+            traiActual = null;
+            puntosDelTrail.Clear();
         }
-        else if (Input.GetMouseButtonUp(0))
+    }
+    /// <summary>
+    /// Se llamara para crear una nueva linea
+    /// </summary>
+    public void CrearTrailActual()
+    {
+
+        traiActual = Instantiate(trailPrefab);
+        traiActual.transform.SetParent(transform, true);
+    }
+    /// <summary>
+    /// Se llamara para crear un nuevo punto para la linea
+    /// </summary>
+    public void AddPunto()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        puntosDelTrail.Add(Camera.main.ViewportToWorldPoint(new Vector3(mousePosition.x / Screen.width, mousePosition.y / Screen.height, distancia)));
+    }
+
+    /// <summary>
+    /// Se llamara para ir uniendo los puntos hasta llegar al final hasta que se no haya sufiencente spuntos o no exista el el rastro actual
+    /// </summary>
+    public void UpdatePuntosTrail()
+    {
+        if (traiActual != null && puntosDelTrail.Count > 1)
         {
-            lr.enabled = false;
+            traiActual.positionCount = puntosDelTrail.Count;
+            traiActual.SetPositions(puntosDelTrail.ToArray());
+        }
+        else
+        {
+            DestroyTrailActual();
         }
     }
 
-    void OnGUI()
+    /// <summary>
+    /// Se llamara para ir limpiando el reastro poco a poco
+    /// </summary>
+    public void LimpiarPuntosTrail()
     {
-        GUI.skin.label.fontSize = 30;
-        GUILayout.Label("Screen: " + Input.mousePosition.ToString());
-        GUILayout.Label("World: " + linePoints[1].ToString());
+        float velLimpieza = limpiezaSpeed;
+        //NOTE: Esto evita que podamos tener una linea demasiado larga, aumentado su velocidad de limpieza dependiendo de la longuitud de la linea
+        if (puntosDelTrail.Count > 15 )
+        {
+            velLimpieza *= puntosDelTrail.Count/2;
+        }
+        else
+        {
+            velLimpieza = limpiezaSpeed;
+        }
+        float distanciaLimpieza = Time.deltaTime * velLimpieza;
+
+        
+        while (puntosDelTrail.Count > 1 && distanciaLimpieza > 0)
+        {
+            float distancia = (puntosDelTrail[1] - puntosDelTrail[0]).magnitude;
+            if (distanciaLimpieza > distancia)
+            {
+                puntosDelTrail.RemoveAt(0);
+            }
+            else
+            {
+                puntosDelTrail[0] = Vector3.Lerp(puntosDelTrail[0], puntosDelTrail[1], distanciaLimpieza / distancia);
+            }
+            distanciaLimpieza -= distancia;
+        }
     }
+
 }

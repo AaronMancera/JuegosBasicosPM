@@ -1956,6 +1956,7 @@ GameObject:
   m_Component:
   - component: {fileID: 879274235}
   - component: {fileID: 879274236}
+  - component: {fileID: 879274237}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2004,6 +2005,20 @@ MonoBehaviour:
   volumenSlider: {fileID: 1257717911}
   mixer: {fileID: 24100000, guid: 2944674336c336647800d10df7eebc3d, type: 2}
   pauseScreen: {fileID: 48164794}
+--- !u!114 &879274237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879274234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97767f0b978589468cffb91199d83e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailPrefab: {fileID: 1077057532490844934, guid: 0a44382e69a1d824a8c6e30432911fd7, type: 3}
+  limpiezaSpeed: 5
 --- !u!1 &958915433
 GameObject:
   m_ObjectHideFlags: 0
