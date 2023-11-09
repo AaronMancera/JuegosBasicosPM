@@ -29,27 +29,57 @@ public class Target : MonoBehaviour
     void Update()
     {
     }
-    Vector3 RandomForce()
+    /// <summary>
+    /// Devolvera una vector que actuara como fuerza de impuslo de manera aleatoria
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 RandomForce()
     {
         return Vector3.up * Random.Range(minSpeed, maxSpeed);
     }
-    float RandomTorque()
+    /// <summary>
+    /// Devolvera una float que actuara de fuerza de rotacion de manera aleatoria
+    /// </summary>
+    /// <returns></returns>
+    private float RandomTorque()
     {
         return Random.Range(-maxTorque, maxTorque);
     }
-    Vector3 RandomSpawnPos()
+    /// <summary>
+    /// Devolvera un vector que actuara de posicion de instanciamiento aleatorio
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 RandomSpawnPos()
     {
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
     }
-    private void OnMouseDown()
+    /// <summary>
+    /// Meotodo para que el ratón + click izquierdo interactue con el objeto, dando puntos al ser destruido
+    /// </summary>
+    //private void OnMouseDown()
+    //{
+    //    if (gameManager.isGameActive)
+    //    {
+    //        Destroy(gameObject);
+    //        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+    //        gameManager.UpdateScore(pointValue);
+    //    }
+    //}
+
+    /// <summary>
+    /// Metodo que se llamara desde el gameobject para destruir el objeto
+    /// </summary>
+    public void OnPlayerDestroyMe()
     {
-        if (gameManager.isGameActive)
-        {
-            Destroy(gameObject);
-            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
-            gameManager.UpdateScore(pointValue);
-        }
+        Destroy(gameObject);
+        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+        gameManager.UpdateScore(pointValue);
     }
+
+    /// <summary>
+    /// El trigger de un plano inferior actuara con el gameobject y eliminara el objeto, restando una vida
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);

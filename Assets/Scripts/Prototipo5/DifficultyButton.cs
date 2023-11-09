@@ -20,6 +20,9 @@ public class DifficultyButton : MonoBehaviour
     {
 
     }
+    /// <summary>
+    /// Metodo de seleccion de dificultad
+    /// </summary>
     void SetDifficulty()
     {
         gameManager.StartGame(difficulty);
