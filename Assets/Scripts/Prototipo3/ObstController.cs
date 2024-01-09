@@ -11,10 +11,12 @@ public class ObstController : MonoBehaviour
     private float startSegSpawnSpeed;
     //*Adicional*: Velocidad de movimiento
     private AudioSource cameraAudioSource;
-    private MoveToLeftController moveToLeftController;
     [SerializeField] private BackgroundPictureController backgroundPictureController1;
     [SerializeField] private BackgroundPictureController backgroundPictureController2;
     [SerializeField] private JumpPlayerController jumpPlayerController;
+    [SerializeField] private GameObject nuevoObstaculo;
+    [SerializeField] private MoveToLeftController moveToLeftController;
+
     //*Puntuacion*
     public static float puntuacion;
     // Start is called before the first frame update
@@ -43,9 +45,9 @@ public class ObstController : MonoBehaviour
                 //NOTE: Le asignamos el tag al gameobject nuevo
                 gameObjectNuevo.tag = "Enemy";
                 Quaternion angulo = Quaternion.Euler(0, -180, 0); //Esto es para girarlo y que este mirando para el jugador
-                Instantiate(gameObjectNuevo, new Vector3(1.5f, 0.27f, lineaSpwanZ), angulo);
+                nuevoObstaculo = Instantiate(gameObjectNuevo, new Vector3(1.5f, 0.27f, lineaSpwanZ), angulo);
                 segSpawnSpeed = startSegSpawnSpeed;
-                moveToLeftController = gameObjectNuevo.GetComponent<MoveToLeftController>();
+                moveToLeftController = nuevoObstaculo.GetComponent<MoveToLeftController>();
             }
 
 
